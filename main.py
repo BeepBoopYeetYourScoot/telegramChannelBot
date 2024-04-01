@@ -5,6 +5,7 @@ from telegram.ext import (
     MessageHandler,
     filters,
 )
+from telegram_menu import TelegramMenuSession
 
 from commands import (
     start_command,
@@ -15,6 +16,7 @@ from commands import (
 )
 from conf import TOKEN
 from handlers import handle_message, error_handler
+from menu import StartMessage
 
 COMMAND_HANDLER_MAP = {
     "start": start_command,
@@ -28,6 +30,7 @@ COMMAND_HANDLER_MAP = {
 if __name__ == "__main__":
     loguru.logger.info("Starting bot")
     app = Application.builder().token(TOKEN).build()
+
     # Commands
     for command_name, callback in COMMAND_HANDLER_MAP.items():
         app.add_handler(CommandHandler(command_name, callback))
@@ -39,4 +42,5 @@ if __name__ == "__main__":
     app.add_error_handler(error_handler)
 
     loguru.logger.info("Polling")
+    TelegramMenuSession(TOKEN).start(StartMessage)
     app.run_polling(poll_interval=3)
