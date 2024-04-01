@@ -1,5 +1,10 @@
 import loguru
-from telegram.ext import Application, CommandHandler, MessageHandler, filters
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    MessageHandler,
+    filters,
+)
 
 from commands import (
     start_command,
@@ -23,7 +28,6 @@ COMMAND_HANDLER_MAP = {
 if __name__ == "__main__":
     loguru.logger.info("Starting bot")
     app = Application.builder().token(TOKEN).build()
-
     # Commands
     for command_name, callback in COMMAND_HANDLER_MAP.items():
         app.add_handler(CommandHandler(command_name, callback))
